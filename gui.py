@@ -19,7 +19,7 @@ class App(QWidget):
         self.left = 10
         self.top = 10
         self.width = 550
-        self.height = 200
+        self.height = 360
         self.get_awscli_profiles()
         self.initUI()
 
@@ -61,6 +61,10 @@ class App(QWidget):
         go_btn.clicked.connect(self.go_func)
 
         # QTextEdit
+        output_display = QTextEdit(self)
+        output_display.move(10,150)
+        output_display.resize(529,200)
+        
 
         self.show()
 
@@ -139,6 +143,7 @@ class App(QWidget):
                             instance.state['Name']
                             ]
                     print(mylist)
+        self.on_activated_list = []
 
     # Trigger response for profile_dropdown_selector
     def on_activated(self, text):
@@ -147,13 +152,17 @@ class App(QWidget):
         else:
             self.on_activated_list.append(text)
 
-class ErrorWindow():
-    pass
+# Send stdout and stderr to QTextEdit
+# class OutLog:
+#     pass
+
+# Class to build error window
+# class ErrorWindow():
+#     pass
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    # Change output to app instead of terminal
-    sys.stdout = App()
-    sys.stderr = App()
+    # sys.stdout = OutLog(edit, sys.stdout)
+    # sys.stderr = OutLog(edit, sys.stderr, QtGui.QColor(255,0,0) )
     ex = App()
     sys.exit(app.exec_())
